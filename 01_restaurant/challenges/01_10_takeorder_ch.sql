@@ -17,15 +17,52 @@ WHERE
   Address = '6939 Elka Place';
 
 SELECT 
+  SUM(Dishes.Price),
   Customers.FirstName,
   Customers.LastName,
-  Customers.Address,
-  Dishes.Name,
-  Dishes.Price
+  Customers.Address
 FROM 
-  Orders 
+  Customers
+JOIN Orders 
+ON Orders.CustomerID = Customers.CustomerID
 JOIN OrdersDishes 
 ON Orders.OrderID = OrdersDishes.OrderID
 JOIN Dishes 
 ON Dishes.DishID = OrdersDishes.DishID
-WHERE OrderID = 1 AND Orders.CustomerID = 77;
+WHERE Orders.OrderID = 1001
+GROUP BY 
+  Customers.FirstName,
+  Customers.LastName,
+  Customers.Address
+ORDER BY 
+  Orders.OrderDate;
+
+-- Find the DishID for the items
+SELECT
+  *
+FROM
+  Dishes
+WHERE 
+  Name IN (
+    'House Salad',
+    'Tropical Blue Smoothie',
+    'Mini Cheeseburgers');
+-- MC = 4, HS = 7, TBS = 20
+INSERT INTO 
+  Orders (CustomerID, OrderDate)
+VALUES 
+  (70, '2022-20-09 14:00:00');
+
+SELECT
+  *
+FROM
+  Orders
+WHERE 
+  CustomerID = 70
+ORDER BY 
+  OrderDate DESC;
+
+INSERT INTO 
+  OrdersDishes (OrderID, DishID)
+VALUES 
+  (1001, 4), (1001, 7), (1001, 20);
