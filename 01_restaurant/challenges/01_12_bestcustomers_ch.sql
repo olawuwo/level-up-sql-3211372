@@ -8,7 +8,7 @@ SELECT
   c.LastName,
   c.Email
 FROM
-  Customers AS c
+  Customers AS 
 JOIN Orders AS o
   ON c.CustomerID = o.CustomerID
 GROUP BY
